@@ -16,14 +16,27 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
+        let appearance = UITabBarAppearance()
+        
         let nav1 = UINavigationController(rootViewController: searchVC)
-        nav1.tabBarItem = UITabBarItem(title: "Search", image: UIImage(systemName: "magnifyingglass"), tag: 0)
+        nav1.tabBarItem = UITabBarItem(title: "Search", image: UIImage(systemName: "magnifyingglass"), selectedImage: UIImage(systemName: "magnifyingglass.circle.fill"))
         
         let nav2 = UINavigationController(rootViewController: favoriteVC)
-        nav2.tabBarItem = UITabBarItem(title: "Favorites", image: UIImage(systemName: "star"), tag: 1)
+        nav2.tabBarItem = UITabBarItem(title: "Favorites", image: UIImage(systemName: "star"), selectedImage: UIImage(systemName: "star.fill"))
         
         let tabBar = UITabBarController()
         tabBar.viewControllers = [nav1, nav2]
+        
+        tabBar.tabBar.backgroundColor = .systemBackground
+        
+        tabBar.tabBar.layer.shadowColor = UIColor.black.cgColor
+        tabBar.tabBar.layer.shadowOpacity = 0.1
+        tabBar.tabBar.layer.shadowOffset = CGSize(width: 0, height: -2)
+        tabBar.tabBar.layer.shadowRadius = 6
+        
+        tabBar.tabBar.layer.cornerRadius = 20
+        tabBar.tabBar.layer.masksToBounds = true
+        tabBar.tabBar.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         
                 guard let windowScene = (scene as? UIWindowScene) else { return }
                 let window = UIWindow(windowScene: windowScene)
@@ -32,6 +45,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 window.makeKeyAndVisible()
                 self.window = window
         guard let _ = (scene as? UIWindowScene) else { return }
+        
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = .systemIndigo
+        
+        appearance.stackedLayoutAppearance.selected.iconColor = .white
+        appearance.stackedLayoutAppearance.selected.titleTextAttributes = [.foregroundColor: UIColor.white]
+        
+        appearance.stackedLayoutAppearance.normal.iconColor = .lightGray
+        appearance.stackedLayoutAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.lightGray]
+        
+        UITabBar.appearance().standardAppearance = appearance
+        UITabBar.appearance().scrollEdgeAppearance = appearance
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

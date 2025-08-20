@@ -17,6 +17,10 @@ class FavoritesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Favorites"
+        
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.largeTitleDisplayMode = .always
+        
         view.backgroundColor = .systemBackground
         setupTableView()
         setupStatsLabel()
@@ -89,7 +93,7 @@ class FavoritesViewController: UIViewController {
     }
     
     private func setupTableView() {
-        tableView.register(MovieCell.self, forCellReuseIdentifier: "MovieCell")
+        tableView.register(MovieCustomCell.self, forCellReuseIdentifier: MovieCustomCell.identifier)
         tableView.dataSource = self
         tableView.delegate = self
         view.addSubview(tableView)
@@ -118,7 +122,7 @@ extension FavoritesViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "MovieCell", for: indexPath) as! MovieCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: MovieCustomCell.identifier, for: indexPath) as! MovieCustomCell
         let movie = movies[indexPath.row]
         cell.configure(title: movie.title ?? "", year: movie.year ?? "", poster: movie.poster ?? "")
         return cell
@@ -130,6 +134,10 @@ extension FavoritesViewController: UITableViewDataSource, UITableViewDelegate {
             movies.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return view.bounds.height / 10
     }
 }
 

@@ -19,6 +19,10 @@ class MovieSearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Поиск фильмов"
+        
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.largeTitleDisplayMode = .always
+        
         view.backgroundColor = .systemBackground
         tableView.delegate = self
         setupUI()
@@ -62,7 +66,7 @@ class MovieSearchViewController: UIViewController {
         searchbar.delegate = self
         
         tableView.dataSource = self
-        tableView.register(MovieCell.self, forCellReuseIdentifier: "MovieCell")
+        tableView.register(MovieCustomCell.self, forCellReuseIdentifier: MovieCustomCell.identifier)
         
         
         activityIndicatorView.hidesWhenStopped = true
@@ -135,7 +139,7 @@ extension MovieSearchViewController: UITableViewDataSource,UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "MovieCell", for: indexPath) as? MovieCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: MovieCustomCell.identifier, for: indexPath) as? MovieCustomCell else {
             return UITableViewCell()
         }
         let movie = viewModel.movies[indexPath.row]
@@ -152,5 +156,8 @@ extension MovieSearchViewController: UITableViewDataSource,UITableViewDelegate {
             cell.alpha = 1
             cell.transform = .identity
         })
+    }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return view.bounds.height / 10
     }
 }
