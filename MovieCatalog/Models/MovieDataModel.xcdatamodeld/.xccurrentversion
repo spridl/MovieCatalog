@@ -3,6 +3,6 @@
 <plist version="1.0">
 <dict>
 	<key>_XCCurrentVersionName</key>
-	<string>MovieCatalog.xcdatamodel</string>
+	<string>MovieDataModel.xcdatamodel</string>
 </dict>
 </plist>

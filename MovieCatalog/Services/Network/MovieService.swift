@@ -6,3 +6,13 @@
 //
 
 import Foundation
+
+class MovieService {
+    func searchMovies(query: String) {
+        
+    }
+    
+    func getMovieDetail(id: String) {
+        
+    }
+}
